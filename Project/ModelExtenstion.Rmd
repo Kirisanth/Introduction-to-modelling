@@ -1,0 +1,48 @@
+---
+title: "Model Extension"
+author: "Kirisanth"
+date: "Tuesday, November 18, 2014"
+output: pdf_document
+---
+
+```{r}
+
+#P <- 1:10 
+
+P[1] = 100
+
+#D <- 1:10
+
+D[1] = 2
+
+#Plant growth rate without deer.
+a = 2
+#Plant deer encounter rate
+c = 0.01
+#efficiency for deer to convert plant to deer
+e = 0.10
+#mortality rate deer
+f = 0.01
+#hunting rate deer
+h = 0
+
+for (i in 1:10) {
+  
+  P[i+1] <- P[i] + a*P[i] - c*P[i]*D[i]
+  D[i+1] <- D[i] + e*c*P[i]*D[i] - f*D[i] - h
+
+}
+
+print(D)
+print(P)
+
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(D)
+plot(P)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
