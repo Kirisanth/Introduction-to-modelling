@@ -1,4 +1,4 @@
-Introduction-to-modelling-3mb3
+Introduction-to-modelling
 ==============================
 
 Project and Assignments
