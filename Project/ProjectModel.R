@@ -1,34 +1,31 @@
 P <- 1:50 
 
-P[1] = 100000
+P[1] = 1
 
 D <- 1:50
 
-D[1] = 4
+D[1] = 1
 
 #Plant growth rate without deer.
-a <- 0.20
+a <- 2
 #Plant deer encounter rate
-c <- 0.50
+c <- 0.5
 #efficiency for deer to convert plant to deer
-e <- 0.01
+e <- 0.3
 #mortality rate deer
-f <- 0.01
+f <- 0.6
 #hunting rate deer
-h = 1
-
-k<-0.01
+h = 0
 
 for (i in 1:50) {
-  
   P[i+1] <- P[i] + a*P[i] - c*P[i]*D[i]
-  D[i+1] <- D[i] + k*P[i]*D[i] - f*D[i] - h
+  D[i+1] <- D[i] + e*c*P[i]*D[i] - f*D[i] - h
 
 }
 
-print(D)
 print(P)
+print(D)
 
 
-plot(D)
-#plot(P)
+plot(P)
+#plot(D)

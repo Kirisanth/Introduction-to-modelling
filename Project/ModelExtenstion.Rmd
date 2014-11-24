@@ -2,47 +2,190 @@
 title: "Model Extension"
 author: "Kirisanth"
 date: "Tuesday, November 18, 2014"
-output: pdf_document
+output: html_document
 ---
+**Initial Model**
+White tail deer and Plant Model
+predator-prey model
+
+$$ P(t + 1) = P(t) + aP(t) - cP(t)D(t) $$
+$$ D(t + 1) = D(t) + ecP(t)D(t) - fD(t) - h $$ 
+where:\
+$a$ is the growth rate of plants in the absence of deer \
+$c$ is the per-deer-plant-encounter rate \
+$e$ is the efficiency of deer at converting captured plants into resources \
+$f$ is the per-deer mortality rate \
+$h$ is the permitted hunting rate \
+
+
+Solve for fixed points \
+$P{\star} = P{\star}(1 + a - cD{\star})$ \
+$D{\star} = D{\star}(1 + ecP{\star} - f - h)$ \
+
+Fixed Points: \
+$(0, 0)$ \
+$((-1+f+h)/ec, (1+a)/c)$ \
+
+
+A fixed point is stable if all of the eigenvalues of this matrix (evaluating at the fixed point) have absolute value less than one.\
+The Jacobian for the predator-prey model is \
+
+$\begin{equation*}
+  \label{eq:1}
+  \begin{pmatrix}
+    \frac{\partial D(t+1)}{\partial D(t)} & 
+    \frac{\partial D(t+1)}{\partial P(t)} \\
+    \frac{\partial P(t+1)}{\partial D(t)} & 
+    \frac{\partial P(t+1)}{\partial P(t)} \\
+  \end{pmatrix}
+\end{equation*}$
+
+Jacobian for above equations\
+
+$\begin{equation*}
+  \label{eq:2}
+  \begin{pmatrix}
+    1 + a - cD &
+    -cP \\
+    ecD &
+    ecP - f \\
+  \end{pmatrix}
+\end{equation*}$
+
+For $(0, 0)$ \
+$\begin{equation*}
+  \label{eq:3}
+  \begin{pmatrix}
+    1 + a &
+    0 \\
+    0 &
+    - f \\
+  \end{pmatrix}
+\end{equation*}$
+
+For $((-1+f+h)/ec, (1+a)/c)$ \
+$\begin{equation*}
+  \label{eq:4}
+  \begin{pmatrix}
+    1 + a - c((1+a)/c) &
+    -c((-1+f+h)/ec) \\
+    ec((1+a)/c) &
+    ec((-1+f+h)/ec) - f \\
+  \end{pmatrix}
+\end{equation*}$
+
+$\begin{equation*}
+  \label{eq:5}
+  \begin{pmatrix}
+    0 &
+    (1-f-h)/e \\
+    e(1+a) &
+    (h-1) \\
+  \end{pmatrix}
+\end{equation*}$
+
+From wolfram alpha: \
+eigenvalues \
+$\lambda_{1} = 1/2(-\sqrt{-4af - 4ah + 4a - 4f + h^2 - 6h + 5} + h - 1)$ \
+$\lambda_{2} = 1/2(\sqrt{-4af - 4ah + 4a - 4f + h^2 - 6h + 5} + h - 1)$ \
+
+stable if: \
+$\lambda_{1} < 1$ \
+$\lambda_{2} < 1$ \
+
 
 ```{r}
+P <- 1:50 
 
-#P <- 1:10 
+P[1] = 1
 
-P[1] = 100
+D <- 1:50
 
-#D <- 1:10
-
-D[1] = 2
+D[1] = 1
 
 #Plant growth rate without deer.
-a = 2
+a <- 2
 #Plant deer encounter rate
-c = 0.01
+c <- 0.5
 #efficiency for deer to convert plant to deer
-e = 0.10
+e <- 0.3
 #mortality rate deer
-f = 0.01
+f <- 0.6
 #hunting rate deer
 h = 0
 
-for (i in 1:10) {
-  
+for (i in 1:50) {
   P[i+1] <- P[i] + a*P[i] - c*P[i]*D[i]
   D[i+1] <- D[i] + e*c*P[i]*D[i] - f*D[i] - h
 
 }
 
-print(D)
 print(P)
+print(D)
 
 ```
 
-You can also embed plots, for example:
+Plots:
 
 ```{r, echo=FALSE}
 plot(D)
 plot(P)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+**Extended Model**
+Polar bear Population and Seal hunting
+predator-prey model
+
+**Preliminary question**
+Polar bears once abundant in the artic circle are now facing extinction. They are found in Canada, Greenland, Russia, and Alaska. Polar bears are an apex predator. One of their primary food source is the seal. If hunting of seals were to increase it could hurt polar bear populations. Here we will model polar bear populations with seal populations. What should the quota of seal hunting be set to, to keep polar bear populations stable.
+
+**Variables** \
+$P(t)$ number of polar bears \
+$S(t)$ numbner of seals \
+$t$ time \
+
+
+**Extended model** \
+Equation: \
+
+Seals
+$$ S(t + 1) = S(t) + aS(t) - cS(t)D(t) - h$$
+Polar bears
+$$ P(t + 1) = P(t) + ecS(t)P(t) - fP(t)$$ 
+
+
+
+```{r}
+S <- 1:50
+S[1] = 100
+
+Pl <- 1:50
+Pl[1] = 1
+
+#Seal growth rate without polar bears.
+a <- 2
+#Seal polar bear encounter rate
+c <- 0.5
+#efficiency for polar bears to convert seals to polar bears
+e <- 0.3
+#mortality rate polar bear
+f <- 0.6
+#hunting rate seals
+h = 0
+
+for (i in 1:50) {
+  #seals
+  S[i+1] <- S[i] + a*S[i] - c*S[i]*Pl[i] - h
+  #polar bears
+  Pl[i+1] <- Pl[i] + e*c*S[i]*Pl[i] - f*Pl[i]
+
+}
+```
+
+```{r, echo=FALSE}
+plot(D)
+plot(Pl)
+```
+
+
