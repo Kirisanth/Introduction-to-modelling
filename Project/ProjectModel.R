@@ -1,10 +1,10 @@
 P <- 1:50 
 
-P[1] = 1
+P[1] = 10
 
 D <- 1:50
 
-D[1] = 1
+D[1] = 2
 
 #Plant growth rate without deer.
 a <- 2

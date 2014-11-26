@@ -7,6 +7,7 @@ output: html_document
 **Initial Model**
 White tail deer and Plant Model
 predator-prey model
+Can be applied to model polar bears and seal interaction
 
 $$ P(t + 1) = P(t) + aP(t) - cP(t)D(t) $$
 $$ D(t + 1) = D(t) + ecP(t)D(t) - fD(t) - h $$ 
@@ -97,7 +98,7 @@ $\lambda_{2} < 1$ \
 ```{r}
 P <- 1:50 
 
-P[1] = 1
+P[1] = 100
 
 D <- 1:50
 
@@ -114,7 +115,7 @@ f <- 0.6
 #hunting rate deer
 h = 0
 
-for (i in 1:50) {
+for (i in 1:49) {
   P[i+1] <- P[i] + a*P[i] - c*P[i]*D[i]
   D[i+1] <- D[i] + e*c*P[i]*D[i] - f*D[i] - h
 
@@ -128,7 +129,7 @@ print(D)
 Plots:
 
 ```{r, echo=FALSE}
-plot(D)
+plot(D, ylim=c(-4.780400e+01,4.780400e+01),type="l")
 plot(P)
 ```
 
@@ -150,7 +151,7 @@ $t$ time \
 Equation: \
 
 Seals
-$$ S(t + 1) = S(t) + aS(t) - cS(t)D(t) - h$$
+$$ S(t + 1) = S(t) + aS(t) - cS(t)P(t) - h$$
 Polar bears
 $$ P(t + 1) = P(t) + ecS(t)P(t) - fP(t)$$ 
 
@@ -167,10 +168,10 @@ Pl[1] = 1
 a <- 2
 #Seal polar bear encounter rate
 c <- 0.5
-#efficiency for polar bears to convert seals to polar bears
+#efficiency for polar bears to convert seals to another polar polar bear
 e <- 0.3
 #mortality rate polar bear
-f <- 0.6
+mp <- 0.6
 #hunting rate seals
 h = 0
 
@@ -186,6 +187,98 @@ for (i in 1:50) {
 ```{r, echo=FALSE}
 plot(D)
 plot(Pl)
+```
+
+**Extenstion Model Part 2**
+
+Polar bear population vs seals population and rising artic population
+
+Seal population
+$$ S(t + 1) = S(t) + aS(t) - cS(t)P(t) - hS(t)H(t) $$
+Polar bear population
+$$ P(t + 1) = P(t) + ecS(t)P(t) - fP(t) $$ 
+Human Population
+$$ H(t+1) = H(t) + ecS(t)H(t) + ecP(t)H(t) - mH(t) $$
+Seal Conservation
+$$ C_{S}(t+1) = C_{S}(t) + rC_{S}(1 - C_{S}/K) - mC_{S} $$
+Polar bear Conservation
+$$ C_{P}(t+1) = C_{P}(t) + rC_{P}(1 - C_{P}/K) - mC_{P} $$
+
+
+
+
+
+```{r}
+S <- 1:50
+P <- 1:50
+H <- 1:50
+CS <- 1:50
+CP <- 1:50
+
+S[1] = 20
+P[1] = 2
+H[1] = 2
+CS[1] = 2
+CP[1] = 2
+
+#Equation 1 seal population
+sg <- 1.3 #Seal growth rate without polar bear or humans.
+sp <- 0.2 #seal-polar bear encounter rate
+sh <- 0.1 #seal-human hunting rate
+
+#Equation 2 polar bear population
+eps <- 0.10 #polar bear efficiency to convert one seal to another polar bear
+mp <- 0.10 #polar bear mortality rate
+
+#Equation 3 human population
+ehs <- 0.05 #human efficiency to convert seals to human
+ehp <- 0.1 #human efficiency to convert polar bears to human
+sh <- 0.2 #seal human encounter rate
+ph <- 0.2 #polar bear human encounter rate
+mh <- 0.1 #human mortality rate
+
+#Equation 4
+KS <- 40 #Capacity
+csg <- 0.8 #seal growth rate in conservation area
+ts <- 0.8 #seal migration out rate
+
+#Equation 5
+KP <- 20 #Capacity
+cpg <- 0.1 #polar growth rate in conservation area
+tp <- 0.05 #polar bear migration out rate
+
+for (t in 1:49) {
+  
+  #Seal population
+  S[t + 1] <- S[t] + sg*S[t] - sp*S[t]*P[t] - sh*S[t]*H[t] + ts*CS[t]
+  #Polar bear population
+  P[t + 1] <- P[t] + eps*sp*S[t]*P[t] - mp*P[t] + tp*CP[t]
+  #Human Population
+  H[t+1] <- H[t] + ehs*sh*S[t]*H[t] + ehp*ph*P[t]*H[t] - mh*H[t]
+  #Seal Conservation
+  CS[t+1] <- CS[t] + csg*CS[t]*(1 - CS[t]/KS) - ts*CS[t]  #1 dimensional
+  #Polar bear Conservation
+  CP[t+1] <- CP[t] + cpg*CP[t]*(1 - CP[t]/KP) - tp*CP[t] #1 dimensional
+}
+
+
+
+
+
+```
+
+Plots:
+
+```{r, echo=FALSE}
+t=seq(0,49,1)
+plot(t,S,type="l",col="red", ylim=c(-200, 200))
+lines(t,P,col="green")
+lines(t,H, col="purple")
+lines(t,CS, col="brown")
+lines(t,CP, col="black")
+grid()
+legendname=expression(P,H,CS,CP)
+legend(80,200,legendname,lty=c(1,1),col=c("green","purple","brown","black"))
 ```
 
 
