@@ -271,14 +271,13 @@ Plots:
 
 ```{r, echo=FALSE}
 t=seq(0,49,1)
-plot(t,S,type="l",col="red", ylim=c(-200, 200))
+plot(t,S,type="l",col="red", ylim=c(-300, 300))
 lines(t,P,col="green")
 lines(t,H, col="purple")
 lines(t,CS, col="brown")
 lines(t,CP, col="black")
 grid()
-legendname=expression(P,H,CS,CP)
-legend(80,200,legendname,lty=c(1,1),col=c("green","purple","brown","black"))
+legend("bottomleft", legend=c("Polar bear", "Seal","Human","Polar Con", "Seal Con"), lwd=c(3,3), col=c("red","green","purple","brown", "black"))
 ```
 
 
