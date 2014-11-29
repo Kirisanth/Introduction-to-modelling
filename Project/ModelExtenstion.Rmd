@@ -133,67 +133,11 @@ plot(D, ylim=c(-4.780400e+01,4.780400e+01),type="l")
 plot(P)
 ```
 
-<!--
-**Extended Model**
-Polar bear Population and Seal hunting
-predator-prey model
-
-**Preliminary question**
-Polar bears once abundant in the artic circle are now facing extinction. They are found in Canada, Greenland, Russia, and Alaska. Polar bears are an apex predator. One of their primary food source is the seal. If hunting of seals were to increase it could hurt polar bear populations. Here we will model polar bear populations with seal populations. What should the quota of seal hunting be set to, to keep polar bear populations stable.
-
-**Variables** \
-$P(t)$ number of polar bears \
-$S(t)$ numbner of seals \
-$t$ time \
-
-
-**Extended model** \
-Equation: \
-
-Seals
-$$ S(t + 1) = S(t) + aS(t) - cS(t)P(t) - h$$
-Polar bears
-$$ P(t + 1) = P(t) + ecS(t)P(t) - fP(t)$$ 
-
-
-
-```{r}
-S <- 1:50
-S[1] = 100
-
-Pl <- 1:50
-Pl[1] = 1
-
-#Seal growth rate without polar bears.
-a <- 2
-#Seal polar bear encounter rate
-c <- 0.5
-#efficiency for polar bears to convert seals to another polar polar bear
-e <- 0.3
-#mortality rate polar bear
-mp <- 0.6
-#hunting rate seals
-h = 0
-
-for (i in 1:50) {
-  #seals
-  S[i+1] <- S[i] + a*S[i] - c*S[i]*Pl[i] - h
-  #polar bears
-  Pl[i+1] <- Pl[i] + e*c*S[i]*Pl[i] - f*Pl[i]
-
-}
-```
-
-```{r, echo=FALSE}
-plot(D)
-plot(Pl)
-```
-
--->
 
 **Extended Model**
-Polar bear Population and Seal hunting
-predator-prey model
+Polar bear population, with Seal hunting, and rising arctic economic activity 
+predator-prey model extended to include other factors
+
 
 **Preliminary question**
 Polar bears once abundant in the artic circle are now facing extinction. They are found in Canada, Greenland, Russia, and Alaska. Polar bears are an apex predator. One of their primary food source is the seal. If hunting of seals were to increase it could hurt polar bear populations. Here we will model polar bear populations with seal populations. What should the quota of seal hunting be set to, to keep polar bear populations stable.
@@ -213,22 +157,20 @@ Equation: \
 Polar bear population vs seals population and rising artic population
 
 Seal population
-$$ S(t + 1) = S(t) + aS(t) - cS(t)P(t) - hS(t)H(t) - i_{s}P(t)I(t)$$
+$$ S(t + 1) = S(t) + r_{g}S(t) - c_{ps}S(t)P(t) - c_{hs}S(t)H(t) - i_{s}P(t)I(t) + m_{S}C_{S}(t)$$
 Polar bear population
-$$ P(t + 1) = P(t) + ecS(t)P(t) - fP(t) - i_{p}P(t)I(t)$$ 
+$$ P(t + 1) = P(t) + e_{ps}c_{ps}S(t)P(t) - d_{p}P(t) - c_{hp}P(t)H(t) - i_{p}P(t)I(t) + m_{P}C_{P}(t)$$ 
 Human Population
-$$ H(t+1) = H(t) + ecS(t)H(t) + ecP(t)H(t) - mH(t) + i_{h}H(t)I(t)$$
+$$ H(t+1) = H(t) + e_{hs}c_{hs}S(t)H(t) + e_{hp}c_{hp}P(t)H(t) - d_{h}H(t) + i_{h}H(t)I(t)$$
 Seal Conservation
-$$ C_{S}(t+1) = C_{S}(t) + r_{S}C_{S}(t)(1 - C_{S}(t)/K_{SC}) - m_{S}C_{S} $$
+$$ C_{S}(t+1) = C_{S}(t) + r_{S}C_{S}(t)(1 - C_{S}(t)/K_{SC}) - m_{S}C_{S}(t)$$
 Polar bear Conservation
-$$ C_{P}(t+1) = C_{P}(t) + r_{P}C_{P}(t)(1 - C_{P}(t)/K_{PC}) - m_{P}C_{P} $$
+$$ C_{P}(t+1) = C_{P}(t) + r_{P}C_{P}(t)(1 - C_{P}(t)/K_{PC}) - m_{P}C_{P}(t)$$
 Industrial Shipping through Northwest Passage
-$$ I(t+1) = I(t) + i_{g}I(t)(1-I(t)/EC)$$
-
-//TODO: need to fix above equations
+$$ I(t+1) = I(t) + r_{i}I(t)(1-I(t)/EC)$$
 
 where: \
-$s_{g}$ - Seal growth rate \
+$r_{g}$ - Seal growth rate \
 $c_{ps}$ - Polar bear seal interaction rate \
 $c_{hs}$ - Human Seal interaction rate \
 $i_{s}$ - Population decline resulting from increasing economic activity \
@@ -236,7 +178,7 @@ $i_{s}$ - Population decline resulting from increasing economic activity \
 $e_{ps}$ - Polar bear efficiency to convert one seal to another polar bear \
 $c_{ps}$ - Polar bear seal interaction rate \
 $c_{hp}$ - Polar bear human interaction rate \
-$f$$d_{p}$ - Polar bear mortality rate \
+$d_{p}$ - Polar bear natural mortality rate \
 $i_{p}$ - Population decline resulting from increasing economic activity \
 \
 $e_{hs}$ - Human efficiency to convery one seal to a human \
@@ -254,10 +196,10 @@ $r_{P}$ - Polar bear reservation growth rate \
 $m_P$ - Polar bear migration out rate \
 $K_{PC}$ - Polar bear reserve capacity \
 \
-$i_{g}$ - Industrial growth rate factors include melting of ice in northwest passage area \
+$r_{i}$ - Industrial growth rate factors include melting of ice in northwest passage area \
 $EC$ - Economic capacity represents diminishing returns in GDP growth \
 
-*Assumptions*
+*Assumptions and Explanation of Constants*
 
 
 ```{r}
@@ -266,54 +208,63 @@ P <- 1:50
 H <- 1:50
 CS <- 1:50
 CP <- 1:50
+I <- 1:50
 
 S[1] = 20
 P[1] = 2
 H[1] = 2
 CS[1] = 2
 CP[1] = 2
+I[1] = 0
 
 #Equation 1 seal population
-sg <- 1.3 #Seal growth rate without polar bear or humans.
-sp <- 0.2 #seal-polar bear encounter rate
-sh <- 0.1 #seal-human hunting rate
+rg <- 1.3 #Seal growth rate without polar bear or humans.
+cps <- 0.2 #seal-polar bear encounter rate
+chs <- 0.1 #seal-human hunting rate
+is <- 0
 
 #Equation 2 polar bear population
 eps <- 0.10 #polar bear efficiency to convert one seal to another polar bear
-mp <- 0.10 #polar bear mortality rate
+dp <- 0.10 #polar bear mortality rate
+mp <- 0
+ip <- 0
 
 #Equation 3 human population
 ehs <- 0.05 #human efficiency to convert seals to human
 ehp <- 0.1 #human efficiency to convert polar bears to human
-sh <- 0.2 #seal human encounter rate
-ph <- 0.2 #polar bear human encounter rate
-mh <- 0.1 #human mortality rate
+chs <- 0.2 #seal human encounter rate
+chp <- 0.2 #polar bear human encounter rate
+dh <- 0.1 #human mortality rate
+ih <- 0
 
 #Equation 4
-KS <- 40 #Capacity
-csg <- 0.8 #seal growth rate in conservation area
-ts <- 0.8 #seal migration out rate
+KSC <- 40 #Capacity
+rs <- 0.8 #seal growth rate in conservation area
+ms <- 0.8 #seal migration out rate
 
 #Equation 5
-KP <- 20 #Capacity
-cpg <- 0.1 #polar growth rate in conservation area
-tp <- 0.05 #polar bear migration out rate
+KPC <- 20 #Capacity
+rp <- 0.1 #polar growth rate in conservation area
+mp <- 0.05 #polar bear migration out rate
+
+#Equation 6
+ri <- 0
+EC <- 0
 
 for (t in 1:49) {
-  
   #Seal population
-  S[t + 1] <- S[t] + sg*S[t] - sp*S[t]*P[t] - sh*S[t]*H[t] + ts*CS[t]
+  S[t + 1] <- S[t] + rg*S[t] - cps*S[t]*P[t] - chs*S[t]*H[t] - is*P[t]*I[t] + ms*CS[t]
   #Polar bear population
-  P[t + 1] <- P[t] + eps*sp*S[t]*P[t] - mp*P[t] + tp*CP[t]
+  P[t + 1] <- P[t] + eps*cps*S[t]*P[t] - dp*P[t] - chp*P[t]*H[t] - ip*P[t]*I[t] + mp*CP[t]
   #Human Population
-  H[t+1] <- H[t] + ehs*sh*S[t]*H[t] + ehp*ph*P[t]*H[t] - mh*H[t]
+  H[t+1] <- H[t] + ehs*chs*S[t]*H[t] + ehp*chp*P[t]*H[t] - dh*H[t] + ih*H[t]*I[t]
   #Seal Conservation
-  CS[t+1] <- CS[t] + csg*CS[t]*(1 - CS[t]/KS) - ts*CS[t]  #1 dimensional
+  CS[t+1] <- CS[t] + rs*CS[t]*(1 - CS[t]/KSC) - ms*CS[t]  #1 dimensional
   #Polar bear Conservation
-  CP[t+1] <- CP[t] + cpg*CP[t]*(1 - CP[t]/KP) - tp*CP[t] #1 dimensional
+  CP[t+1] <- CP[t] + rp*CP[t]*(1 - CP[t]/KPC) - mp*CP[t] #1 dimensional
+  #Industial Shipping through Northwest Passage
+  I[t+1] <- I[t] + ri*I[t]*(1 - I[t]/EC)
 }
-
-
 ```
 
 Plots:
@@ -325,8 +276,9 @@ lines(t,P,col="green")
 lines(t,H, col="purple")
 lines(t,CS, col="brown")
 lines(t,CP, col="black")
+lines(t,I, col="yellow")
 grid()
-legend("bottomleft", legend=c("Polar bear", "Seal","Human","Polar Con", "Seal Con"), lwd=c(3,3), col=c("red","green","purple","brown", "black"))
+legend("bottomleft", legend=c("Polar bear", "Seal","Human","Polar Con", "Seal Con"), lwd=c(3,3), col=c("red","green","purple","brown", "black", "yellow"))
 ```
 
 **References**
