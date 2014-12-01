@@ -3,6 +3,7 @@ title: "Model Extension"
 author: "Kirisanth"
 date: "Tuesday, November 18, 2014"
 output: html_document
+bibliography: bibliography.bib
 ---
 **Initial Model**
 White tail deer and Plant Model
@@ -282,4 +283,34 @@ legend("bottomleft", legend=c("Polar bear", "Seal","Human","Polar Con", "Seal Co
 ```
 
 **References**
+
+#http://www.polarbearhabitat.ca/research
+#http://geology.com/articles/northwest-passage.shtml
+#http://www.planetwater.ca/research/climpact/impacts/shipping.html
+#http://www.theglobeandmail.com/report-on-business/breakthrough/will-cold-dark-northwest-passage-see-more-ships/article16231502/
+#https://www.ocf.berkeley.edu/~reinholz/ed/07fa_m155/lectures/discrete-time_dynamical_systems.pdf
+#http://www.wired.co.uk/news/archive/2013-03/05/trans-arctic-shipping-routes-opening-warming
+#http://www.wwf.ca/conservation/arctic/a_new_frontier_for_shipping/
+#http://www.polarbearsinternational.org/about-polar-bears/essentials/hunting-and-eating
+#http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0041429#s1
+#http://www.worldwildlife.org/species/polar-bear
+---
+references:
+- id: fenner2012a
+  title: One-click science marketing
+  author:
+  - family: Fenner
+    given: Martin
+  container-title: Nature Materials
+  volume: 11
+  URL: 'http://dx.doi.org/10.1038/nmat3283'
+  DOI: 10.1038/nmat3283
+  issue: 4
+  publisher: Nature Publishing Group
+  page: 261-263
+  type: article-journal
+  issued:
+    year: 2012
+    month: 3
+---
 
