@@ -204,7 +204,7 @@ $$ C_{S}(t+1) = C_{S}(t) + r_{S}C_{S}(t)(1 - C_{S}(t)/K_{SC}) - m_{S}C_{S}(t)$$
 
 where:\
 $r_{g}$ is the growth rate of seals in the absence of polar bears \
-$r_{g}$ is the growth rate of seals in the conservation \
+$r_{s}$ is the growth rate of seals in the conservation \
 $c_{ps}$ is the per-polar bear-seal-encounter rate \
 $e_{ps}$ is the efficiency of deer at converting captured plants into resources \
 $d_{p}$ is the per-polar bear mortality rate \
@@ -216,86 +216,58 @@ $S{\star} = S{\star} + r_{g}S{\star} - c_{ps}S{\star}P + m_{S}C_{S}(t)$ \
 $P{\star} = P{\star} + e_{ps}c_{ps}SP{\star} - d_{p}P{\star})$ \
 $C_{S}{\star} = C_{S}{\star} + r_{S}C_{S}{\star}(1 - C_{S}{\star}/K_{SC}) - m_{S}C_{S}{\star}$
 
-Isolate for $C_{\star}$
+Isolate for $C{\star}$ \
+Since it is a one dimensional equation it can be considered as a constant \
 $0 = r_{S}C_{S}{\star}(1 - C_{S}{\star}/K_{SC}) - m_{S}C_{S}{\star}$ \
 $0 = C_{S}{\star}(r_{S} - r_{S}C_{S}{\star}/K_{SC} - m_{S})$ \
 $0 = r_{S} - r_{S}C_{S}{\star}/K_{SC} - m_{S}$ \
 $C_{S}{\star} = (r_{S} - m_{S}) * K_{SC} / r_{S}$ \
-
-$$
-$$
-$$
+$C_{S}{\star} = (1 - m_{S}/r_{S}) * K_{SC}$ (constant) \
+\
+$S(t+1) = S(t) + r_{g}S(t) - c_{ps}S(t)P + m_{S}((1 - m_{S}/r_{S}) * K_{SC})$ \
+$P(t+1) = P(t) + e_{ps}c_{ps}SP(t) - d_{p}P(t))$ \
 
 Fixed Points: \
 $(0, 0)$ \
-$((-1+f+h)/ec, (1+a)/c)$ \
 
+$S{\star} = d_{p}/(e_{ps}c_{ps})$ \
+$P{\star} = r_{g}/c_{ps} + ((e_{ps}m_{S}K_{SC})/d_{p})(1-m_{S}/r_{S})$ \
 
-A fixed point is stable if all of the eigenvalues of this matrix (evaluating at the fixed point) have absolute value less than one.\
-The Jacobian for the predator-prey model is \
+For Fixed Points,
+$(\frac{d_{p}}{e_{ps}c_{ps}},\frac{r_{g}}{c_{ps}} + \frac{e_{ps}m_{S}K_{SC}}{d_{p}} (1-\frac{m_{S}}{r_{S}}))$
 
 $\begin{equation*}
-  \label{eq:1}
+  \label{eq:8}
   \begin{pmatrix}
-    \frac{\partial D(t+1)}{\partial D(t)} & 
-    \frac{\partial D(t+1)}{\partial P(t)} \\
-    \frac{\partial P(t+1)}{\partial D(t)} & 
-    \frac{\partial P(t+1)}{\partial P(t)} \\
+    1 + r_{g} - c_{ps}[\frac{r_{g}}{c_{ps}} + \frac{e_{ps}m_{S}K_{SC}}{d_{p}} (1-\frac{m_{S}}{r_{S}})] &
+    -c_{ps}\frac{d_{p}}{e_{ps}c_{ps}} \\
+    e_{ps}c_{ps}[\frac{r_{g}}{c_{ps}} + \frac{e_{ps}m_{S}K_{SC}}{d_{p}} (1-\frac{m_{S}}{r_{S}})] &
+    1+e_{ps}c_{ps}\frac{d_{p}}{e_{ps}c_{ps}} - d_{p} \\
   \end{pmatrix}
 \end{equation*}$
 
-Jacobian for above equations\
+
 
 $\begin{equation*}
-  \label{eq:2}
+  \label{eq:9}
   \begin{pmatrix}
-    1 + a - cD &
-    -cP \\
-    ecD &
-    ecP - f \\
+    1 - \frac{e_{ps}c_{ps}m_{S}K_{SC}}{d_{p}}(1-\frac{m_{S}}{r_{S}}) &
+    -\frac{d_{p}}{e_{ps}} \\
+    e_{ps}r_{g} + \frac{e_{ps}^2c_{ps}m_{S}K_{SC}}{d_{p}} (1-\frac{m_{S}}{r_{S}}) &
+    1 \\
   \end{pmatrix}
 \end{equation*}$
 
-For $(0, 0)$ \
-$\begin{equation*}
-  \label{eq:3}
-  \begin{pmatrix}
-    1 + a &
-    0 \\
-    0 &
-    - f \\
-  \end{pmatrix}
-\end{equation*}$
+//TODO:Need to finish this
+$|\tau| < \delta + 1$ \
+$|1-c_{ps}+1| < (1-c_{ps}) + \frac{d_{p}}{e_{ps}} (e_{ps}(r_{S}+c_{ps})) +1$ \
+$|2-c| < 2-c+dr+dc$ \
 
-For $((-1+f+h)/ec, (1+a)/c)$ \
-$\begin{equation*}
-  \label{eq:4}
-  \begin{pmatrix}
-    1 + a - c((1+a)/c) &
-    -c((-1+f+h)/ec) \\
-    ec((1+a)/c) &
-    ec((-1+f+h)/ec) - f \\
-  \end{pmatrix}
-\end{equation*}$
+$\therefore$ stable if\
+$c < \frac{-dr}{d-1}$\
+and\
+$d < \frac{c}{r+c}$\
 
-$\begin{equation*}
-  \label{eq:5}
-  \begin{pmatrix}
-    0 &
-    (1-f-h)/e \\
-    e(1+a) &
-    (h-1) \\
-  \end{pmatrix}
-\end{equation*}$
-
-From wolfram alpha: \
-eigenvalues \
-$\lambda_{1} = 1/2(-\sqrt{-4af - 4ah + 4a - 4f + h^2 - 6h + 5} + h - 1)$ \
-$\lambda_{2} = 1/2(\sqrt{-4af - 4ah + 4a - 4f + h^2 - 6h + 5} + h - 1)$ \
-
-stable if: \
-$\lambda_{1} < 1$ \
-$\lambda_{2} < 1$ \
 
 
 ```{r}
