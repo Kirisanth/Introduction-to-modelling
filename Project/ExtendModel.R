@@ -46,7 +46,6 @@ ri <- 0.10 #industrial shipping growth rate
 EC <- 100 #Economic constraint represents diminishing returns of economic growth
 
 for (t in 1:49) {
-  print((1-(S[t]/SC)))
   #Seal population
   S[t + 1] <- S[t] + rg*S[t] - cps*S[t]*P[t] - chs*S[t]*H[t] - is*S[t]*I[t] + ms*CS[t]
   #Polar bear population

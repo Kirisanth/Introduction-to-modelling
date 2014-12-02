@@ -29,7 +29,7 @@ for (t in 1:49) {
     P[t] <- 0 
   }
   #Seal population
-  S[t + 1] <- S[t] + rg*S[t] - cps*S[t]*P[t] + ms*CS[t]
+  S[t + 1] <- S[t] + rg*S[t]*(1 - S[t]/100) - cps*S[t]*P[t] + ms*CS[t]
   #Polar bear population
   P[t + 1] <- P[t] + eps*cps*S[t]*P[t] - dp*P[t]
   #Seal Conservation

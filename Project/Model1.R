@@ -21,15 +21,12 @@ mp <- 0 #polar bear migration out rate
 
 
 for (t in 1:49) {
-  
   if (S[t] < 0) {
     S[t] <- 0
   }
-  
   if (P[t] < 0) {
     P[t] <- 0 
   }
-  
   #Seal population
   S[t + 1] <- S[t] + rg*S[t] - cps*S[t]*P[t] + ms
   #Polar bear population
@@ -37,7 +34,7 @@ for (t in 1:49) {
 }
 
 t=seq(0,49,1)
-# plot(t,S,type="l",col="blue", ylim=c(-20,20))
+# plot(t,S,type="l",col="blue", ylim=c(-20,100))
 plot(t,S,type="l",col="blue")
 lines(t,P,col="red")
 grid()
