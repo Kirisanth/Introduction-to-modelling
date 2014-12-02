@@ -6,8 +6,8 @@ CP <- 1:50 #Polar bear conservation population
 I <- 1:50 #Industrial shipping through northwest passage
 
 S[1] = 40 #Initial Seal population
-P[1] = 10 #Initial polar bear population
-H[1] = 10 #Initial human population
+P[1] = 5 #Initial polar bear population
+H[1] = 5 #Initial human population
 CS[1] = 2 #Initial seal conservation population
 CP[1] = 2 #Initial polar bear conservation population
 I[1] = 1 #Initial amount of Industrial activity (shipping)
@@ -64,7 +64,7 @@ for (t in 1:49) {
 t=seq(0,49,1)
 plot(t,S,type="l",col="blue")
 # plot(t,S,type="l",col="blue", ylim=c(-20, 45))
-# plot(t,S,type="l",col="blue", ylim=c(-200, 200))
+# plot(t,S,type="l",col="blue", ylim=c(-20, 60))
 lines(t,P,col="red")
 lines(t,H, pch=22, lty=2, col="green")
 lines(t,CS, pch=22, lty=2, col="blue")
