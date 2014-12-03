@@ -13,7 +13,7 @@ CP[1] = 2 #Initial polar bear conservation population
 I[1] = 1 #Initial amount of Industrial activity (shipping)
 
 #Equation 1 seal population
-rg <- 1.0 #Seal growth rate without polar bear or humans.
+rg <- 0.5 #Seal growth rate without polar bear or humans.
 cps <- 0.1 #seal-polar bear encounter rate
 is <- 0.1 #industrial effect on seal population
 SC <- 100 #seal carrying capacity

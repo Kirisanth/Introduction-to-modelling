@@ -16,10 +16,6 @@ dp <- 0.1 #polar bear mortality rate
 #migration seals from conservation
 ms <- 0.5 #seal migration out rate
 
-#migration polarbear from conservation
-mp <- 0 #polar bear migration out rate
-
-
 for (t in 1:49) {
   if (S[t] < 0) {
     S[t] <- 0
@@ -39,7 +35,3 @@ plot(t,S,type="l",col="blue")
 lines(t,P,col="red")
 grid()
 legend("topleft", legend=c("Seals", "Polar bears"), lwd=c(3,3), col=c("blue","red"))
-
-
-
-
