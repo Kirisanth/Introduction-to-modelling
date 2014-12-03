@@ -23,7 +23,6 @@ chs <- 0.01 #seal human encounter rate
 chp <- 0.01 #polar bear human encounter rate
 dh <- 0.01 #human mortality rate
 
-
 #Equation 4
 KSC <- 80 #Capacity
 rs <- 0.5 #seal growth rate in conservation area
@@ -44,10 +43,10 @@ for (t in 1:49) {
 t=seq(0,49,1)
 plot(t,S,type="l",col="blue")
 lines(t,P,col="red")
-lines(t,H, pch=22, lty=2, col="green")
+lines(t,H, col="green")
 lines(t,CS, pch=22, lty=2, col="blue")
 grid()
-#legend("bottomleft", legend=c("Polar bear", "Seal","Human","Polar Con", "Seal Con"), lwd=c(3,3), col=c("red","green","purple","brown", "black", "yellow"))
+legend("topright", legend=c("Seal", "Polar bear", "Human", "Seal Con"), lwd=c(1,1,1,1), lty=c(1,1,1,2), col=c("blue","red","green","blue"))
 
 
 
